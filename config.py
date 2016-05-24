@@ -2,7 +2,7 @@ useThingSpeak = 1
 
 base = dict(
     thingspeak = dict(
-        apikey = 'EII2PMU2M8MN7YR9'
+        apikey = 'YOURTHINGSPEAKAPIKEY'
     )
 )
 
