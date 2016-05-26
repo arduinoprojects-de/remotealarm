@@ -1,4 +1,5 @@
 useThingSpeak = 1
+useInnoSend = 1
 
 base = dict(
     thingspeak = dict(

@@ -8,6 +8,7 @@ from datetime import datetime
 import requests
 from RF24 import *
 import config
+import sendsms
 
 radio = RF24(RPI_BPLUS_GPIO_J8_22, RPI_BPLUS_GPIO_J8_24, BCM2835_SPI_SPEED_8MHZ)
 
@@ -55,6 +56,7 @@ def sendThingSpeak(value):
         if r.text != '0':
             break
         elif r.text == '0':
+            print(r.text)
             time.sleep(3)
     
     
@@ -104,8 +106,6 @@ def stopAlarm(type, stopType):
     
     
     
-    
-    
 def checkAlarm(type):
     global alarmTimer, alarm, checkTimer
     
@@ -116,7 +116,7 @@ def checkAlarm(type):
         #print("checkTimer: {}" . format(checkTimer.seconds))
 
         if checkTimer[type].seconds > 10:
-            sendAlarm(type, 'carAlarm', 'Unbefugte Bewegung in CAR01')
+            sendAlarm(type, type + 'Alarm', 'Bewegung in ' + config.alarms[type]['start'])
         elif checkTimer[type].seconds < 10:
             pass
             #print("we have time :)")
@@ -127,6 +127,11 @@ def sendAlarm(type, alarmType, message):
     
     if alarmSend[type] == 0:
         print("sendAlarm type={} message={}" . format(alarmType, message))
+        
+        if config.useInnoSend == 1:
+            smsapi = sendsms.SMS()
+            smsapi.setMessage(message)
+            smsapi.send()
         
         alarmStoppedAt[type] = datetime.now()
         stopAlarm(type, 0)
