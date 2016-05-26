@@ -7,6 +7,10 @@ Arduino / Raspberry Pi remote alarm system
 
 * visualize data with thingspeak.com
 
+# librarys
+
+* NRF24L01 Library (runs on arduino with C and on Raspberry Pi with Python) - https://github.com/TMRh20/RF24
+
 # versions
 
     1.0.0 - base version
